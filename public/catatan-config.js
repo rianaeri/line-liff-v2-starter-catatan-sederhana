@@ -8,10 +8,10 @@ function loadCatatan() {
                 '<th>ID</th>' +
                 '<th>Nama</th>' +
                 '<th>Tanggal</th>' +
-                '<th>Agenda</th>' +
-                '<th>Hapus Agenda</th>' +
-                '<th>Lihat Agenda</th>' +
-                '<th>Edit Agenda</th>' +
+                '<th>Pemesanan</th>' +
+                '<th>Hapus Pemesanan</th>' +
+                '<th>Lihat Pemesanan</th>' +
+                '<th>Edit Pemesanan</th>' +
                 '</thead> <tbody>';
 
             for (i in list_data) {
@@ -20,7 +20,7 @@ function loadCatatan() {
                     '<td>' + list_data[i].id_data + ' </td>' +
                     '<td>' + list_data[i].nama + ' </td>' +
                     '<td>' + list_data[i].tanggal + ' </td>' +
-                    '<td>' + list_data[i].agenda + ' </td>' +
+                    '<td>' + list_data[i].pemesanan + ' </td>' +
                     '<td><a class="btn btn-danger btn-small" href="javascript:void(0)" onclick="hapusData(\'' + list_data[i].id_data + '\')">Hapus</a></td>' +
                     '<td><a class="btn btn-danger btn-small" href="javascript:void(0)" onclick="lihatData(\'' + list_data[i].id_data + '\')">Lihat</a></td>' +
                     '<td><a class="btn btn-warning btn-small" href="javascript:void(0)" onclick="editData(\'' + list_data[i].id_data + '\')">Edit</a></td>';
@@ -31,13 +31,13 @@ function loadCatatan() {
 
         }
         else {
-            data_app = "Catatan masih kosong nih";
+            data_app = "Pemesanan masih kosong ";
         }
 
 
-        $('#list-catatan').html(data_app);
-        $('#list-catatan').hide();
-        $('#list-catatan').fadeIn(100);
+        $('#list-pemesanan').html(data_app);
+        $('#list-pemesanan').hide();
+        $('#list-pemesanan').fadeIn(100);
     }
 }
 
@@ -51,7 +51,7 @@ function editData(id) {
                 $("#eid_data").val(list_data[i].id_data);
                 $("#enama").val(list_data[i].nama);
                 $("#etanggal").val(list_data[i].tanggal);
-                $("#eagenda").val(list_data[i].agenda);
+                $("#epemesanan").val(list_data[i].pemesanan);
                 list_data.splice(idx_data, 1);
             }
             idx_data++;
@@ -71,7 +71,7 @@ function lihatData(id) {
                 $("#lid_data").val(list_data[i].id_data);
                 $("#lnama").val(list_data[i].nama);
                 $("#ltanggal").val(list_data[i].tanggal);
-                $("#lagenda").val(list_data[i].agenda);
+                $("#lpemesanan").val(list_data[i].pemesanan);
                 list_data.splice(idx_data, 1);
             }
             idx_data++;
@@ -89,17 +89,17 @@ function simpanData() {
     } else {
         liff.sendMessages([{
             'type': 'text',
-            'text': "Catatan baru berhasil disimpan"
+            'text': "Pemesanan baru berhasil disimpan"
         }]).then(function() {
-            alert('Catatan Tersimpan');
+            alert('Pemesanan Tersimpan');
         }).catch(function(error) {
-            alert('Aduh kok error ya...');
+            alert('Error...');
         });
     }
 
     nama = $('#nama').val();
     tanggal = $('#tanggal').val();
-    agenda = $('#agenda').val();
+    pemesanan = $('#pemesanan').val();
 
     if (localStorage.list_data && localStorage.id_data) {
         list_data = JSON.parse(localStorage.getItem('list_data'));
@@ -111,11 +111,11 @@ function simpanData() {
     }
 
     id_data++;
-    list_data.push({ 'id_data': id_data, 'nama': nama, 'tanggal': tanggal, 'agenda': agenda });
+    list_data.push({ 'id_data': id_data, 'nama': nama, 'tanggal': tanggal, 'pemesanan': pemesanan });
     localStorage.setItem('list_data', JSON.stringify(list_data));
     localStorage.setItem('id_data', id_data);
     document.getElementById('form-data').reset();
-    gantiMenu('list-catatan');
+    gantiMenu('list-pemesanan');
 
     return false;
 }
@@ -127,23 +127,23 @@ function simpanEditData() {
     } else {
         liff.sendMessages([{
             'type': 'text',
-            'text': "Catatan yang diedit sudah tersimpan"
+            'text': "Pemesanan yang diedit sudah tersimpan"
         }]).then(function() {
-            alert('Catatan tersimpan');
+            alert('Pemesanan tersimpan');
         }).catch(function(error) {
-            alert('Aduh kok error ya...');
+            alert('Error...');
         });
     }
 
     id_data = $('#eid_data').val();
     nama = $('#enama').val();
     tanggal = $('#etanggal').val();
-    agenda = $('#eagenda').val();
+    agenda = $('#epemesanan').val();
 
-    list_data.push({ 'id_data': id_data, 'nama': nama, 'tanggal': tanggal, 'agenda': agenda });
+    list_data.push({ 'id_data': id_data, 'nama': nama, 'tanggal': tanggal, 'pemesanan': pemesanan });
     localStorage.setItem('list_data', JSON.stringify(list_data));
     document.getElementById('eform-data').reset();
-    gantiMenu('list-catatan');
+    gantiMenu('list-pemesanan');
 
     return false;
 }
@@ -155,11 +155,11 @@ function hapusData(id) {
     } else {
         liff.sendMessages([{
             'type': 'text',
-            'text': "Catatan sudah terhapus"
+            'text': "Pemesanan sudah terhapus"
         }]).then(function() {
-            alert('Catatan sudah dihapus');
+            alert('Pemesanan sudah dihapus');
         }).catch(function(error) {
-            alert('Aduh kok nggak bisa');
+            alert('Error');
         });
     }
 
@@ -181,27 +181,27 @@ function hapusData(id) {
 
 
 function gantiMenu(menu) {
-    if (menu == "list-catatan") {
+    if (menu == "list-pemesanan") {
         loadCatatan();
-        $('#tambah-catatan').hide();
-        $('#list-catatan').fadeIn();
+        $('#tambah-pemesanan').hide();
+        $('#list-pemesanan').fadeIn();
         $('#edit-data').hide();
         $('#lihat-data').hide();
     }
-    else if (menu == "tambah-catatan") {
-        $('#tambah-catatan').fadeIn();
-        $('#list-catatan').hide();
+    else if (menu == "tambah-pemesanan") {
+        $('#tambah-pemesanan').fadeIn();
+        $('#list-pemesanan').hide();
         $('#edit-data').hide();
         $('#lihat-data').hide();
     } else if (menu == "edit-data") {
         $('#edit-data').fadeIn();
-        $('#tambah-catatan').hide();
-        $('#list-catatan').hide();
+        $('#tambah-pemesanan').hide();
+        $('#list-pemesanan').hide();
         $('#lihat-data').hide();
     } else if (menu == "lihat-data") {
         $('#lihat-data').fadeIn();
         $('#edit-data').hide();
-        $('#tambah-catatan').hide();
-        $('#list-catatan').hide();
+        $('#tambah-pemesanan').hide();
+        $('#list-pemesanan').hide();
     }
 }
