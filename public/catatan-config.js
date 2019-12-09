@@ -1,4 +1,4 @@
-function loadCatatan() {
+function loadPemesanan() {
     if (localStorage.list_data && localStorage.id_data) {
         list_data = JSON.parse(localStorage.getItem('list_data'));
         var data_app = "";
